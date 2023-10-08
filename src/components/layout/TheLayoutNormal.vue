@@ -48,7 +48,7 @@ export default{
             this.dict.forEach((item,index)=>
             {
                 let lastChar = "";
-                if(index!=this.dict.length-2){
+                if(index!=this.dict.length-1){
                     lastChar=",\n";
                 }
                 else{
@@ -65,6 +65,10 @@ export default{
                 else if(this.dict[index][1].indexOf("nvarchar")!=-1){
                     listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("nvarchar",""),this.dict[index][0])+"'"+lastChar;
                     listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("nvarchar",""),this.dict[index][0])+"'"+lastChar;
+                }
+                else{
+                    listTextNormal+="'"+"____________________"+"'"+lastChar;
+                    listTextMax+="'"+"________________"+"'"+lastChar;
                 }
             });            
             let tam="\n'2023-03-30 17:11:16.0660000',\n'CxcWmsBatch',\n'DEV-TRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'2023-03-30 17:11:16.0660000',\n'CxcWmsBatch',\n'DEV-TRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
