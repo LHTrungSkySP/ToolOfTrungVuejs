@@ -2,7 +2,6 @@
 import TheNavbar from './components/header/TheNavbar.vue'
 import TheHeader from './components/header/TheHeader.vue'
 import TheLayoutNormal from './components/layout/TheLayoutNormal.vue'
-import TheLayoutMax from './components/layout/TheLayoutMax.vue'
 import TheLayoutNoContent from './components/layout/TheLayoutNoContent.vue'
 </script>
 
@@ -11,7 +10,6 @@ import TheLayoutNoContent from './components/layout/TheLayoutNoContent.vue'
   <TheNavbar @changeLayoutFunction="changeLayoutFunction"></TheNavbar>
   <div class="body p-2 h-100 flex-grow-1">
     <TheLayoutNormal v-if="listLayoutFunction.normal"></TheLayoutNormal>
-    <TheLayoutMax v-if="listLayoutFunction.max"></TheLayoutMax>
     <TheLayoutNoContent v-if="listLayoutFunction.validate || listLayoutFunction.check"></TheLayoutNoContent>
   </div>
 </template>
@@ -21,7 +19,6 @@ export default {
     return{
       listLayoutFunction:{
         normal: true,
-        max: false,
         validate: false,
         check: false
       }

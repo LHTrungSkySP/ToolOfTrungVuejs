@@ -4,9 +4,6 @@
       <button @click="changeStatus('normal')" class="btn btn-secondary"
         :class="{ 'bg-danger': listStatus.normal }">Normal</button>
 
-      <button @click="changeStatus('max')" class="btn btn-secondary" 
-      :class="{ 'bg-danger': listStatus.max }">Max</button>
-
       <button @click="changeStatus('validate')" class="btn btn-secondary"
         :class="{ 'bg-danger': listStatus.validate }">Validate</button>
 
@@ -29,7 +26,6 @@ export default {
     return {
       listStatus: {
         normal: true,
-        max: false,
         validate: false,
         check: false
       }

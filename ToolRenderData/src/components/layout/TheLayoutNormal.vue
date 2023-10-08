@@ -1,23 +1,27 @@
 <template lang="">
     <div class="CheckArea" style="display: flex;">
-        <div class="d-flex flex-column w-100">
+        <!-- <div class="d-flex flex-column w-100">
             <label class=" text-white btn btn-primary text-center m-1" for="Guid">Guid
             </label>
             <img class="w-75" src="../../assets/img/step1.png" alt="">
             <img class="w-50" src="../../assets/img/step2.png" alt="">
-        </div>
-        <div class="w-25"></div>
+        </div> -->
+        
         <div class="d-flex flex-column w-100">
             <label class="text-white btn btn-primary text-center mb-2" for="InputDesign">Nhập design</label>
 
-            <textarea @input="renderData" class="TrungLH-textarea w-100 h-100 rounded p-4" name="" id="InputDesign" cols="30" rows="40"></textarea>
+            <textarea @input="renderData" class="TrungLH-textarea w-100 h-100 rounded p-4" name="" id="InputDesign" cols="30" rows="40">{{this.InputDesign}}</textarea>
 
         </div>
         <div class="w-25"></div>
         <div class="d-flex flex-column w-100">
-            <label class="text-white btn btn-primary text-center mb-2" for="OutputText">ListText</label>
+            <button @click="copyValue('OutputText')" class="text-white btn btn-primary text-center mb-2">ListText</button>
             <textarea class="TrungLH-textarea w-100 h-100 rounded p-4" name="" id="OutputText" cols="30" rows="40">{{this.OutputText}}</textarea>
-
+        </div>
+        <div class="w-25"></div>
+        <div class="d-flex flex-column w-100">
+            <button @click="copyValue('OutputTextMax')" class="text-white btn btn-primary text-center mb-2">ListTextMax</button>
+            <textarea class="TrungLH-textarea w-100 h-100 rounded p-4" name="" id="OutputTextMax" cols="30" rows="40">{{this.OutputTextMax}}</textarea>
         </div>
     </div>
 </template>
@@ -27,115 +31,50 @@ import $ from "jquery";
 export default{
     data(){
         return{
-            InputDesign:'',
+            InputDesign:"(<ID, uniqueidentifier,>\n           ,<FirstName, int,>\n           ,<LastName, nvarchar(50),>\n           ,<UserName, nvarchar(100),>\n           ,<Password, nvarchar(100),>\n           ,<CreatedDate, date,>)",
             OutputText:'',
-            dict:[[]]
+            OutputTextMax:'',
+            dict:[]
         }
     },
     methods:{
         renderData: function(){
-            // Loại bỏ các ký tự đặc biệt ',', '(', ')', '<', '>'
-            let cleanedData = InputDesign.value.trim();
+            // đưa về mảng
+            let arr =InputDesign.value.split("\n");
+            this.dict=LHTrung_func.standarData(arr);
             
-            // Chuyển đoạn dữ liệu thành một mảng bằng cách tách dựa trên dấu '\n'
-            let dataArray = cleanedData.split('\n');
-
-            for (let i = 0; i < dataArray.length; i++) {
-                dataArray[i] = dataArray[i].trim()
-                dataArray[i] = dataArray[i].replace(/[\(\)\<\>,]/g, '');
-                InputDesign += dataArray[i] + '\n';
-
-                ListTextMax[i] = dataArray[i].split(' ')[0];
-                ListTextMax1[i] = (dataArray[i].split(' ')[1] + '').replace(/\D/g, '');
-
-                dataArray[i] = dataArray[i].split(' ')[1] + '';
-                dataArray[i] = dataArray[i].replace(/\D/g, '');
-
-                newArr += dataArray[i] + "\n";
-            }
-
-            OutputText.value= dataArray.length;
+            let listTextNormal="(";
+            let listTextMax="(";
+            this.dict.forEach((item,index)=>
+            {
+                let lastChar = "";
+                if(index!=this.dict.length-2){
+                    lastChar=",\n";
+                }
+                else{
+                    lastChar=")"
+                }
+                if(this.dict[index][0]=="拠点コード"){
+                    listTextNormal+="'9993273'"+lastChar;
+                    listTextMax+="'9993273'"+lastChar;
+                }
+                else if(this.dict[index][1].indexOf("int")!=-1){
+                    listTextNormal+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
+                    listTextMax+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
+                }
+                else if(this.dict[index][1].indexOf("nvarchar")!=-1){
+                    listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("nvarchar",""),this.dict[index][0])+"'"+lastChar;
+                    listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("nvarchar",""),this.dict[index][0])+"'"+lastChar;
+                }
+            });            
+            this.OutputText=listTextNormal;
+            this.OutputTextMax=listTextMax;
+        },
+        copyValue: function(id){
+            $("#"+id).select();
+            document.execCommand("copy");
         }
+
     }
 }
-// $(document).ready(function () {
-//     init();
-//     $("#InputDesign").on('input', function () {
-        
-
-//         $("#InputDesign").val(cleanedData);
-//         let newArr = [];
-//         let ListTextMax = [];
-//         let ListTextMax1 = [];
-//         let InputDesign = '';
-//         for (let i = 0; i < dataArray.length; i++) {
-//             dataArray[i] = dataArray[i].trim()
-//             dataArray[i] = dataArray[i].replace(/[\(\)\<\>,]/g, '');
-//             InputDesign += dataArray[i] + '\n';
-
-//             ListTextMax[i] = dataArray[i].split(' ')[0];
-//             ListTextMax1[i] = (dataArray[i].split(' ')[1] + '').replace(/\D/g, '');
-
-//             dataArray[i] = dataArray[i].split(' ')[1] + '';
-//             dataArray[i] = dataArray[i].replace(/\D/g, '');
-
-//             newArr += dataArray[i] + "\n";
-//         }
-//         $('#TextSL').val(newArr);
-//         $('#Text_Length_Design').val(newArr);
-//         $('#InputDesign').val(InputDesign);
-
-//         let KqListMax = '';
-//         for (let x = 0; x < ListTextMax1.length; x++) {
-//             let DoDaiMax = ListTextMax1[x];
-//             let text = ListTextMax[x];
-//             console.log(text);
-//             if (DoDaiMax != '') {
-//                 let DoDaiBanDau = text.length;
-//                 let MangCanLayMax = text.split("");
-//                 let textMax = "";
-//                 let dem = DoDaiMax;
-//                 let demhaha = 0;
-//                 for (let i = 0; dem > 0 && demhaha < DoDaiBanDau; i++) {
-
-//                     if (LHTrung_func.isCharacterInAscii(MangCanLayMax[i])) {
-//                         dem -= 1;
-//                         demhaha++;
-//                     }
-//                     else {
-//                         dem -= 2;
-//                         demhaha += 2;
-//                     }
-//                     if (dem == 0) {
-//                         textMax += MangCanLayMax[i];
-//                         break;
-//                     }
-//                     if (dem < 0) {
-//                         textMax += "0";
-//                     }
-//                     else {
-//                         textMax += MangCanLayMax[i]
-//                         if (i == DoDaiBanDau - 1) {
-//                             i = -1;
-//                         }
-//                     }
-//                 }
-//                 KqListMax += ',\'' + textMax + '\'' + '\n';
-//             }
-//             else {
-//                 KqListMax += ',\'' + Math.floor(Math.random() * 110) + '\'' + '\n';
-//             }
-//         }
-//         $('#ListTextMax').val(KqListMax);
-//     });
-
-// });
-// function init() {
-//     $('#InputDesign').focus(function () {
-//         $('#InputDesign').select();
-//     });
-//     $('#OutputText').focus(function () {
-//         $('#OutputText').select();
-//     });
-// }
 </script>
