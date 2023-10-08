@@ -31,7 +31,7 @@ import $ from "jquery";
 export default{
     data(){
         return{
-            InputDesign:"(<ID, uniqueidentifier,>\n           ,<FirstName, int,>\n           ,<LastName, nvarchar(50),>\n           ,<UserName, nvarchar(100),>\n           ,<Password, nvarchar(100),>\n           ,<CreatedDate, date,>)",
+            InputDesign:"",
             OutputText:'',
             OutputTextMax:'',
             dict:[]
@@ -52,7 +52,7 @@ export default{
                     lastChar=",\n";
                 }
                 else{
-                    lastChar=")"
+                    lastChar="";
                 }
                 if(this.dict[index][0]=="拠点コード"){
                     listTextNormal+="'9993273'"+lastChar;
@@ -67,8 +67,9 @@ export default{
                     listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("nvarchar",""),this.dict[index][0])+"'"+lastChar;
                 }
             });            
-            this.OutputText=listTextNormal;
-            this.OutputTextMax=listTextMax;
+            let tam="\n'2023-03-30 17:11:16.0660000',\n'CxcWmsBatch',\n'DEV-TRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'2023-03-30 17:11:16.0660000',\n'CxcWmsBatch',\n'DEV-TRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
+            this.OutputText=listTextNormal+tam;
+            this.OutputTextMax=listTextMax+tam;
         },
         copyValue: function(id){
             $("#"+id).select();
