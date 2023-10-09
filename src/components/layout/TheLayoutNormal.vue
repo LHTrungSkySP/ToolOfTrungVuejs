@@ -74,7 +74,7 @@ export default{
                 }
             });  
             let now = new Date().toLocaleString();
-            let tam="\n'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
+            let tam="'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
             this.OutputText=listTextNormal+tam;
             this.OutputTextMax=listTextMax+tam;
         },
