@@ -62,9 +62,9 @@ export default{
                     listTextNormal+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
                     listTextMax+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
                 }
-                else if(this.dict[index][1].indexOf("nvarchar")!=-1){
-                    listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("nvarchar",""),this.dict[index][0])+"'"+lastChar;
-                    listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("nvarchar",""),this.dict[index][0])+"'"+lastChar;
+                else if(this.dict[index][1].indexOf("varchar")!=-1){
+                    listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
+                    listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
                 }
                 else{
                     listTextNormal+="'"+"____________________"+"'"+lastChar;
