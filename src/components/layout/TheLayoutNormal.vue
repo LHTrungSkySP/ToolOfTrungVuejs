@@ -63,6 +63,15 @@ export default{
                         listTextNormal+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
                         listTextMax+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
                     }
+                    else if(this.dict[index][1].indexOf("float")!=-1){
+                        listTextNormal+="'"+ (Math.random()* 110).toFixed(2)+"'"+lastChar;
+                        listTextMax+="'"+(Math.random() * 110).toFixed(2)+"'"+lastChar;
+                    }
+                    else if(this.dict[index][1].indexOf("date")!=-1){
+                        let year = new Date().getFullYear();
+                        listTextNormal+="'"+ year+"'"+lastChar;
+                        listTextMax+="'"+year+"'"+lastChar;
+                    }
                     else if(this.dict[index][1].indexOf("varchar")!=-1){
                         listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
                         listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
