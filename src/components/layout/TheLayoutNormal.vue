@@ -47,7 +47,7 @@ export default{
             let listTextMax="(";
             this.dict.forEach((item,index)=>
             {
-                if(this.dict[index][0].indexOf("SYS作成")==-1 && this.dict[index][0].indexOf("SYS最終更新")==-1){
+                if(this.dict[index][0].indexOf("SYS")==-1){
                     let lastChar = "";
                     if(index!=this.dict.length-1){
                         lastChar=",\n";
