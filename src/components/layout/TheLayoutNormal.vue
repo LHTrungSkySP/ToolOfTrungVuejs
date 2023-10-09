@@ -47,31 +47,34 @@ export default{
             let listTextMax="(";
             this.dict.forEach((item,index)=>
             {
-                let lastChar = "";
-                if(index!=this.dict.length-1){
-                    lastChar=",\n";
+                if(this.dict[index][0].indexOf("SYS作成")=-1 && this.dict[index][0].indexOf("SYS最終更新")=-1){
+                    let lastChar = "";
+                    if(index!=this.dict.length-1){
+                        lastChar=",\n";
+                    }
+                    else{
+                        lastChar="";
+                    }
+                    if(this.dict[index][0]=="拠点コード"){
+                        listTextNormal+="'9993273'"+lastChar;
+                        listTextMax+="'9993273'"+lastChar;
+                    }
+                    else if(this.dict[index][1].indexOf("int")!=-1){
+                        listTextNormal+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
+                        listTextMax+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
+                    }
+                    else if(this.dict[index][1].indexOf("varchar")!=-1){
+                        listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
+                        listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
+                    }
+                    else{
+                        listTextNormal+="'"+"____________________"+"'"+lastChar;
+                        listTextMax+="'"+"________________"+"'"+lastChar;
+                    }
                 }
-                else{
-                    lastChar="";
-                }
-                if(this.dict[index][0]=="拠点コード"){
-                    listTextNormal+="'9993273'"+lastChar;
-                    listTextMax+="'9993273'"+lastChar;
-                }
-                else if(this.dict[index][1].indexOf("int")!=-1){
-                    listTextNormal+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
-                    listTextMax+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
-                }
-                else if(this.dict[index][1].indexOf("varchar")!=-1){
-                    listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
-                    listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
-                }
-                else{
-                    listTextNormal+="'"+"____________________"+"'"+lastChar;
-                    listTextMax+="'"+"________________"+"'"+lastChar;
-                }
-            });            
-            let tam="\n'2023-03-30 17:11:16.0660000',\n'CxcWmsBatch',\n'DEV-TRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'2023-03-30 17:11:16.0660000',\n'CxcWmsBatch',\n'DEV-TRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
+            });  
+            let now = new Date().toLocaleString();
+            let tam="\n'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
             this.OutputText=listTextNormal+tam;
             this.OutputTextMax=listTextMax+tam;
         },
