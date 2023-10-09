@@ -1,17 +1,10 @@
 <template lang="">
     <div>
-        <button @click="GetComputerName()">asdasd</button>
+        COMING SOON
     </div>
 </template>
 <script>
 export default {
-    methods:{
-        GetComputerName: function () {
-            const computerName = navigator.userAgent;
-console.log("Tên máy tính:", computerName);
-
-    }
-    }
 }
 </script>
 <style lang="">
