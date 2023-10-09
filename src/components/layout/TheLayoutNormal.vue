@@ -73,8 +73,12 @@ export default{
                     }
                 }
             });  
-            let now = new Date().toLocaleString();
-            let tam="'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
+            let now = new Date().toLocaleString().replace("/", '-').replace("/", '-');
+            let nowString=[];
+            nowString= now.split(" ");
+
+
+            let tam="'"+nowString[1]+" "+nowString[0]+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'"+nowString[1]+" "+nowString[0]+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
             this.OutputText=listTextNormal+tam;
             this.OutputTextMax=listTextMax+tam;
         },
