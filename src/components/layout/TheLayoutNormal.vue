@@ -16,6 +16,7 @@
         <div class="w-25"></div>
         <div class="d-flex flex-column w-100">
             <button @click="copyValue('OutputText')" class="text-white btn btn-primary text-center mb-2">ListText</button>
+            <input v-on:keyup.enter="changeKinoid()" type="text" name="" id="inputKinoID" v-model="kinoIdInput">
             <textarea class="TrungLH-textarea w-100 h-100 rounded p-4" name="" id="OutputText" cols="30" rows="40">{{this.OutputText}}</textarea>
         </div>
         <div class="w-25"></div>
@@ -28,58 +29,85 @@
 <script>
 import * as LHTrung_func from "../../assets/LHTrung_package/javascript/function";
 import $ from "jquery";
-export default{
-    data(){
-        return{
-            InputDesign:"",
-            OutputText:'',
-            OutputTextMax:'',
-            dict:[]
+export default {
+    data() {
+        return {
+            InputDesign: "",
+            OutputText: '',
+            OutputTextMax: '',
+            dict: [],
+            kinoId: "",
+            kinoIdInput: ""
         }
     },
-    methods:{
-        renderData: function(){
+    methods: {
+        changeKinoid: function(){
+                this.OutputText = this.OutputText.split("xxx").join(this.kinoIdInput);
+        },
+        renderData: function () {
             // đưa về mảng
-            let arr =InputDesign.value.split("\n");
-            this.dict=LHTrung_func.standarData(arr);
-            
-            let listTextNormal="(";
-            let listTextMax="(";
-            this.dict.forEach((item,index)=>
-            {
-                if(this.dict[index][0].indexOf("SYS")==-1){
+            let arr = InputDesign.value.split("\n");
+            this.dict = LHTrung_func.standarData(arr);
+
+            let listTextNormal = "(";
+            let listTextMax = "(";
+            this.dict.forEach((item, index) => {
+                if (this.dict[index][0].indexOf("SYS") == -1) {
                     let lastChar = "";
-                    if(index!=this.dict.length-1){
-                        lastChar=",\n";
+                    if (index != this.dict.length - 1) {
+                        lastChar = ",\n";
                     }
-                    else{
-                        lastChar="";
+                    else {
+                        lastChar = "";
                     }
-                    if(this.dict[index][0]=="拠点コード"){
-                        listTextNormal+="'9993273'"+lastChar;
-                        listTextMax+="'9993273'"+lastChar;
+                    if (this.dict[index][0] == "拠点コード") {
+                        listTextNormal += "'9993273'" + lastChar;
+                        listTextMax += "'9993273'" + lastChar;
                     }
-                    else if(this.dict[index][1].indexOf("int")!=-1){
-                        listTextNormal+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
-                        listTextMax+="'"+Math.floor(Math.random() * 110)+"'"+lastChar;
+                    else if (this.dict[index][1].indexOf("int") != -1) {
+                        listTextNormal += "'" + Math.floor(Math.random() * 110) + "'" + lastChar;
+                        listTextMax += "'" + Math.floor(Math.random() * 110) + "'" + lastChar;
                     }
-                    else if(this.dict[index][1].indexOf("varchar")!=-1){
-                        listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
-                        listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
+                    else if (this.dict[index][1].indexOf("float") != -1) {
+                        listTextNormal += "'" + (Math.random() * 110).toFixed(2) + "'" + lastChar;
+                        listTextMax += "'" + (Math.random() * 110).toFixed(2) + "'" + lastChar;
                     }
-                    else{
-                        listTextNormal+="'"+"____________________"+"'"+lastChar;
-                        listTextMax+="'"+"________________"+"'"+lastChar;
+                    else if (this.dict[index][1].indexOf("date") != -1) {
+                        let year = new Date().getFullYear();
+                        listTextNormal += "'" + year + "'" + lastChar;
+                        listTextMax += "'" + year + "'" + lastChar;
+                    }
+                    else if (this.dict[index][1].indexOf("varchar") != -1) {
+                        listTextNormal += "'" + LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar", ""), this.dict[index][0]) + "'" + lastChar;
+                        listTextMax += "'" + LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar", ""), this.dict[index][0]) + "'" + lastChar;
+                    }
+                    else {
+                        listTextNormal += "'" + "____________________" + "'" + lastChar;
+                        listTextMax += "'" + "________________" + "'" + lastChar;
                     }
                 }
-            });  
-            let now = new Date().toLocaleString();
-            let tam="'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'"+now+"',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
-            this.OutputText=listTextNormal+tam;
-            this.OutputTextMax=listTextMax+tam;
+            });
+            // Lấy ngày, tháng và năm hiện tại từ đối tượng Date
+            let currentDate = new Date();
+            let year = currentDate.getFullYear();
+            let month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0, nên cần +1 và định dạng 2 chữ số.
+            let day = String(currentDate.getDate()).padStart(2, "0");
+
+            // Xây dựng chuỗi với định dạng "yyyy-mm-dd"
+            let formattedDate = `${year}-${month}-${day}`;
+
+            let hours = String(currentDate.getHours()).padStart(2, "0"); // Lấy giờ và định dạng 2 chữ số.
+            let minutes = String(currentDate.getMinutes()).padStart(2, "0"); // Lấy phút và định dạng 2 chữ số.
+            let seconds = String(currentDate.getSeconds()).padStart(2, "0"); // Lấy giây và định dạng 2 chữ let currentTime = `${hours}:${minutes}:${seconds}`;
+
+            let currentTime = `${hours}:${minutes}:${seconds}`;
+
+            let tam = "'" + formattedDate + " " + currentTime + "',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'" + formattedDate + " " + currentTime + "',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
+            this.OutputText = listTextNormal + tam;
+            this.OutputTextMax = listTextMax + tam;
         },
-        copyValue: function(id){
-            $("#"+id).select();
+        copyValue: function (id) {
+            $("#" + id).select();
             document.execCommand("copy");
         }
 

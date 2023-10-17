@@ -50,7 +50,11 @@ export function standarData(arr) {
     });
     return dict;
 }
-
+function getRandomCharacter() {
+    const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    return characters.charAt(randomIndex);
+  }
 export function renderDataNormal(DoDaiMax, text) {
     let KqListMax = '';
     let DoDaiBanDau = text.length;
@@ -58,6 +62,9 @@ export function renderDataNormal(DoDaiMax, text) {
     let textMax = "";
     let dem = DoDaiMax;
     let demhaha = 0;
+    if(DoDaiMax==1){
+        return getRandomCharacter();
+    }
     for (let i = 0; dem > 0 && demhaha < DoDaiBanDau; i++) {
 
         if (isCharacterInAscii(MangCanLayMax[i])) {
@@ -66,7 +73,7 @@ export function renderDataNormal(DoDaiMax, text) {
         }
         else {
             dem -= 2;
-            demhaha += 2;
+            demhaha += 1;
         }
         if (dem == 0) {
             textMax += MangCanLayMax[i];
