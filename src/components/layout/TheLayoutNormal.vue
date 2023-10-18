@@ -55,7 +55,7 @@ export default {
                 if (this.dict[index][0].indexOf("SYS") == -1) {
                     let lastChar = "";
                     if (index != this.dict.length - 1) {
-                        lastChar = ",\n";
+                        lastChar = "\n";
                     }
                     else {
                         lastChar = "";
@@ -65,34 +65,34 @@ export default {
                         listTextMax += "'9993273'" + lastChar;
                     }
                     else if (this.dict[index][1].indexOf("int") != -1) {
-                        listTextNormal += "'" + Math.floor(Math.random() * 110) + "'" + lastChar;
-                        listTextMax += "'" + Math.floor(Math.random() * 110) + "'" + lastChar;
+                        listTextNormal += ",'" + Math.floor(Math.random() * 110) + "'" + lastChar;
+                        listTextMax += ",'" + Math.floor(Math.random() * 110) + "'" + lastChar;
                     }
                     else if(this.dict[index][1].indexOf("float")!=-1){
-                        listTextNormal+="'"+ (Math.random()* 110).toFixed(2)+"'"+lastChar;
-                        listTextMax+="'"+(Math.random() * 110).toFixed(2)+"'"+lastChar;
+                        listTextNormal+=",'"+ (Math.random()* 110).toFixed(2)+"'"+lastChar;
+                        listTextMax+=",'"+(Math.random() * 110).toFixed(2)+"'"+lastChar;
                     }
                     else if(this.dict[index][1].indexOf("date")!=-1){
                         let year = new Date().getFullYear();
-                        listTextNormal+="'"+ year+"'"+lastChar;
-                        listTextMax+="'"+year+"'"+lastChar;
+                        listTextNormal+=",'"+ year+"'"+lastChar;
+                        listTextMax+=",'"+year+"'"+lastChar;
                     }
                     else if(this.dict[index][1].indexOf("varchar")!=-1){
-                        listTextNormal+="'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
-                        listTextMax+="'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
+                        listTextNormal+=",'"+LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
+                        listTextMax+=",'"+LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar",""),this.dict[index][0])+"'"+lastChar;
                     }
                     else if (this.dict[index][1].indexOf("date") != -1) {
                         let year = new Date().getFullYear();
-                        listTextNormal += "'" + year + "'" + lastChar;
-                        listTextMax += "'" + year + "'" + lastChar;
+                        listTextNormal += ",'" + year + "'" + lastChar;
+                        listTextMax += ",'" + year + "'" + lastChar;
                     }
                     else if (this.dict[index][1].indexOf("varchar") != -1) {
-                        listTextNormal += "'" + LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar", ""), this.dict[index][0]) + "'" + lastChar;
-                        listTextMax += "'" + LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar", ""), this.dict[index][0]) + "'" + lastChar;
+                        listTextNormal += ",'" + LHTrung_func.renderDataNormal(this.dict[index][1].replace("varchar", ""), this.dict[index][0]) + "'" + lastChar;
+                        listTextMax += ",'" + LHTrung_func.renderDataMax(this.dict[index][1].replace("varchar", ""), this.dict[index][0]) + "'" + lastChar;
                     }
                     else {
-                        listTextNormal += "'" + "____________________" + "'" + lastChar;
-                        listTextMax += "'" + "________________" + "'" + lastChar;
+                        listTextNormal += ",'" + "____________________" + "'" + lastChar;
+                        listTextMax += ",'" + "________________" + "'" + lastChar;
                     }
                 }
             });
@@ -111,7 +111,7 @@ export default {
 
             let currentTime = `${hours}:${minutes}:${seconds}`;
 
-            let tam = "'" + formattedDate + " " + currentTime + "',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx',\n'" + formattedDate + " " + currentTime + "',\n'CxcWmsBatch',\n'DEVTRUNGLH',\n'xxx',\n'xxx',\n'xxx')"
+            let tam = ",'" + formattedDate + " " + currentTime + "'\n,'CxcWmsBatch'\n,'DEVTRUNGLH'\n,'xxx'\n,'xxx'\n,'xxx'\n,'" + formattedDate + " " + currentTime + "'\n,'CxcWmsBatch'\n,'DEVTRUNGLH'\n,'xxx'\n,'xxx'\n,'xxx')"
             this.OutputText = listTextNormal + tam;
             this.OutputTextMax = listTextMax + tam;
         },

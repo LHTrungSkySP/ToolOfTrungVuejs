@@ -80,7 +80,7 @@ export function renderDataNormal(DoDaiMax, text) {
             break;
         }
         if (dem < 0) {
-            textMax += "0";
+            textMax += getRandomCharacter();
         }
         else {
             textMax += MangCanLayMax[i]
