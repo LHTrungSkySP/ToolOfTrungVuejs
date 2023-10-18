@@ -16,7 +16,7 @@
         <div class="w-25"></div>
         <div class="d-flex flex-column w-100">
             <button @click="copyValue('OutputText')" class="text-white btn btn-primary text-center mb-2">ListText</button>
-            <input v-on:keyup.enter="changeKinoid()" type="text" name="" id="inputKinoID" v-model="kinoIdInput">
+            <input v-on:keyup.enter="changeKinoid($event.target.value)" type="text" name="" id="inputKinoID">
             <textarea class="TrungLH-textarea w-100 h-100 rounded p-4" name="" id="OutputText" cols="30" rows="40">{{this.OutputText}}</textarea>
         </div>
         <div class="w-25"></div>
@@ -36,13 +36,13 @@ export default {
             OutputText: '',
             OutputTextMax: '',
             dict: [],
-            kinoId: "",
-            kinoIdInput: ""
+            kinoId: "xxx",
         }
     },
     methods: {
-        changeKinoid: function(){
-                this.OutputText = this.OutputText.split("xxx").join(this.kinoIdInput);
+        changeKinoid: function(_kinoid){
+            this.OutputText = this.OutputText.split(this.kinoId).join(_kinoid);
+            this.kinoId=_kinoid;
         },
         renderData: function () {
             // đưa về mảng
